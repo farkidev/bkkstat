@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 
-const baseUrl = 'http://futar.bkk.hu/bkk-utvonaltervezo-api/ws/otp/api/where/';
+const baseUrl = 'https://cors-anywhere.herokuapp.com/http://futar.bkk.hu/bkk-utvonaltervezo-api/ws/otp/api/where/';
 
 @Injectable()
 export class FutarService {
@@ -14,11 +14,13 @@ export class FutarService {
   constructor(private http: HttpClient) { }
 
   public getStopsForRoute(routeId: string): Observable<any> {
-    const url = baseUrl + 'route-details.json?stopId=' + routeId;
-    return this.http.get<StopInfo>(url).map(si => {
+    const url = baseUrl + 'route-details.json?routeId=' + routeId;
+    return this.http.get<IStopInfo>(url).map(si => {
       const res: RouteStops[] = [];
       si.data.entry.variants.forEach(v => {
-        res.push(v);
+        const rs = new RouteStops();
+        rs.initFromInterface(v);
+        res.push(rs);
       });
       return res;
     });
@@ -45,17 +47,44 @@ export class FutarService {
   }
 }
 
-interface StopInfo {
-  data: {
+interface IStopInfo {
+  data?: {
     entry: {
-      variants: RouteStops[]
+      variants: IRouteStops[]
     }
   };
 }
 
-interface RouteStops {
-  routeId: string;
-  name: string;
-  stopIds: string[];
-  headsign: string;
+class StopInfo implements IStopInfo {
+  constructor (
+    public data?: {
+      entry: {
+        variants: IRouteStops[]
+      }
+    }
+  ) {}
+}
+
+interface IRouteStops {
+  routeId?: string;
+  name?: string;
+  stopIds?: string[];
+  headsign?: string;
+}
+
+class RouteStops implements IRouteStops {
+  constructor(
+    public routeId?: string,
+    public name?: string,
+    public stopIds?: string[],
+    public headsign?: string,
+  ) {}
+
+
+  public initFromInterface(val: IRouteStops) {
+    this.routeId = val.routeId;
+    this.name = val.name;
+    this.headsign = val.headsign;
+    this.stopIds = val.stopIds;
+  }
 }
