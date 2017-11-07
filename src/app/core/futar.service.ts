@@ -1,12 +1,13 @@
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import * as process from 'process';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import { IScheduleForStopEntry, IScheduleForStopResponse, ScheduleForStopEntry } from './stopTime';
 
-const baseUrl = 'https://cors-anywhere.herokuapp.com/http://futar.bkk.hu/bkk-utvonaltervezo-api/ws/otp/api/where/';
+const baseUrl = environment.apiRootUrl;
 
 @Injectable()
 export class FutarService {
@@ -26,25 +27,24 @@ export class FutarService {
     });
   }
 
-  // public getScheduleForStop(stopId: string, date?: Date): Observable<any> {
-  //   let url = baseUrl + 'schedule-for-stop.json?stopId=' + stopId;
-  //   if (date !== undefined) {
-  //     url += '&date=' + moment(date).format('YYYYMMDD');
-  //   }
-  //   return this.http.get(url).map(
-  //     (res) => this.processScheduleResponse(res.json()),
-  //     (err) => { throw err; }
-  //   );
-  // }
-
-  private processScheduleResponse(json: any): any {
-    if (json.data !== undefined
-      && json.data.routes !== undefined
-      && json.data.routes !== undefined) {
-        return json;
+  public getScheduleForStop(stopId: string, date?: Date): Observable<IScheduleForStopEntry> {
+    let url = baseUrl + 'schedule-for-stop.json?stopId=' + stopId;
+    if (date !== undefined) {
+      url += '&date=' + moment(date).format('YYYYMMDD');
     }
-    return 'error';
+    return this.http.get<IScheduleForStopResponse>(url).map(
+      (res) => ScheduleForStopEntry.reducedSchedules(res.data.entry)
+    );
   }
+
+  // private processScheduleResponse(json: any): any {
+  //   if (json.data !== undefined
+  //     && json.data.routes !== undefined
+  //     && json.data.routes !== undefined) {
+  //       return json;
+  //   }
+  //   return 'error';
+  // }
 }
 
 interface IStopInfo {
@@ -88,3 +88,5 @@ class RouteStops implements IRouteStops {
     this.stopIds = val.stopIds;
   }
 }
+
+

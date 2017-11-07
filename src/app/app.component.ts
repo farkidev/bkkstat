@@ -19,7 +19,11 @@ export class AppComponent implements OnInit {
     // this.futarService.getStopsForRoute('BKK_F00979', new Date(Date.now())).subscribe(
     //   res => {this.retVal = res; }
     // );
-    this.futarService.getStopsForRoute('BKK_MP533').subscribe(
+    // BKK_F01234
+    // this.futarService.getStopsForRoute('BKK_MP533').subscribe(
+    //   res => {this.retVal = res; }
+    // );
+    this.futarService.getScheduleForStop('BKK_F01234').subscribe(
       res => {this.retVal = res; }
     );
   }

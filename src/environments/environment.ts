@@ -4,5 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiRootUrl: 'https://cors-anywhere.herokuapp.com/http://futar.bkk.hu/bkk-utvonaltervezo-api/ws/otp/api/where/'
 };
