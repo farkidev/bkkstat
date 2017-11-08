@@ -28,6 +28,22 @@ export class AppComponent implements OnInit {
           this.stopIds.push(rs.stopIds);
         });
         this.stopsReadyCount++;
+        // if (this.stopsReadyCount === this.routeIds.length) {
+        //   this.getDistinctIds();
+
+        //   console.log(this.distinctStopIds);
+        // }
+      });
+    });
+  }
+
+  private getDistinctIds() {
+    this.stopIds.forEach(ids => {
+      ids.forEach(id => {
+        if (this.distinctStopIds.some(di => di === id) === false) {
+          this.distinctStopIds.push(id);
+          // console.log(this.distinctStopIds);
+        }
       });
     });
   }

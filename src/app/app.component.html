@@ -4,8 +4,11 @@
       <button type="button" (click)="getStopIds()">Megállók</button>
       <p>{{stopsReadyCount}}/{{routeIds.length}}</p>
       <p *ngFor="let ids of stopIds">{{ids}}</p>
-      <br>
-      <p>Egyedi: {{distinctStopIds}}</p>
+      
+  </div>
+  <div>
+      <button type="button" (click)="getDistinctIds()">Egyedi</button>
+      <p>Egyedi: {{distinctStopIds.length}} {{distinctStopIds}}</p>
   </div>
   <button type="button">Stoplekérés</button>
   <button type="button"></button>
