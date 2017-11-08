@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  apiRootUrl: 'https://cors-anywhere.herokuapp.com/http://futar.bkk.hu/bkk-utvonaltervezo-api/ws/otp/api/where/'
+  apiRootUrl: 'https://cors-anywhere.herokuapp.com/http://futar.bkk.hu/bkk-utvonaltervezo-api/ws/otp/api/where/',
+  jsonApi: 'https://api.myjson.com/bins/'
 };

@@ -37,6 +37,13 @@ export class FutarService {
     );
   }
 
+  public uploadSchedule(body: any): Observable<string> {
+    return this.http.post<{uri: string}>(environment.jsonApi, body)
+          .map(juri =>
+            juri.uri
+          );
+  }
+
   // private processScheduleResponse(json: any): any {
   //   if (json.data !== undefined
   //     && json.data.routes !== undefined

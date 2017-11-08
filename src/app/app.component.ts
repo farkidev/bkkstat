@@ -24,7 +24,13 @@ export class AppComponent implements OnInit {
     //   res => {this.retVal = res; }
     // );
     this.futarService.getScheduleForStop('BKK_F01234').subscribe(
-      res => {this.retVal = res; }
+      res => {
+        this.futarService.uploadSchedule(res).subscribe(
+          uri => {
+            this.retVal = `BKK_F01234: ${uri}`;
+          }
+        );
+      }
     );
   }
 }
