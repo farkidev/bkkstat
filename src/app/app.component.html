@@ -1,8 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
+  <div>
+      <button type="button" (click)="getStopIds()">Megállók</button>
+      <p>{{stopsReadyCount}}/{{routeIds.length}}</p>
+      <p *ngFor="let ids of stopIds">{{ids}}</p>
+      <br>
+      <p>Egyedi: {{distinctStopIds}}</p>
+  </div>
+  <button type="button">Stoplekérés</button>
+  <button type="button"></button>
   <div>{{retVal | json }}</div>
 </div>
 

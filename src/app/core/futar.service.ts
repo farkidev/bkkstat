@@ -14,7 +14,7 @@ export class FutarService {
 
   constructor(private http: HttpClient) { }
 
-  public getStopsForRoute(routeId: string): Observable<any> {
+  public getStopsForRoute(routeId: string): Observable<RouteStops[]> {
     const url = baseUrl + 'route-details.json?routeId=' + routeId;
     return this.http.get<IStopInfo>(url).map(si => {
       const res: RouteStops[] = [];
